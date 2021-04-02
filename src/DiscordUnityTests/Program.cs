@@ -13,19 +13,9 @@ namespace DiscordUnityTests
     class Program
     {
         private static Thread thread;
-
-        static void Main(string[] args)
+ 
+        static async void Start()
         {
-            Console.Title = "DiscordUnity";
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine("Starting up DiscordUnity!");
-            thread = Thread.CurrentThread;
-
-            DiscordAPI.Logger = new Logger();
-
-            static async void Start()
-            {
                 string token;
 
                 using (StreamReader r = new StreamReader("config.json"))
@@ -38,7 +28,17 @@ namespace DiscordUnityTests
                 await DiscordAPI.StartWithBot(token);
                 DiscordAPI.RegisterEventsHandler(new Handler());
                 Console.WriteLine("DiscordUnity Started: " + (Thread.CurrentThread == thread));
-            }
+        }
+
+        static void Main(string[] args)
+        {
+            Console.Title = "DiscordUnity";
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("Starting up DiscordUnity!");
+            thread = Thread.CurrentThread;
+
+            DiscordAPI.Logger = new Logger();
 
             Start();
 
